@@ -367,6 +367,11 @@ params   = _params;
         
         _spinner = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:
                     UIActivityIndicatorViewStyleWhiteLarge];
+        if ([_spinner respondsToSelector:@selector(setColor:)]) {
+            [_spinner setColor:[UIColor grayColor]];
+        } else {
+            [_spinner setActivityIndicatorViewStyle:UIActivityIndicatorViewStyleGray];
+        }
         _spinner.autoresizingMask =
         UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleBottomMargin
         | UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleRightMargin;
@@ -568,7 +573,7 @@ params   = _params;
         if (start.location != 0) {
             c = [url characterAtIndex:start.location - 1];
         }
-        if (c == '?' || c == '&') {        
+        if (c == '?' || c == '&' || c == '#') {        
             NSRange end = [[url substringFromIndex:start.location+start.length] rangeOfString:@"&"];
             NSUInteger offset = start.location+start.length;
             str = end.location == NSNotFound ?
